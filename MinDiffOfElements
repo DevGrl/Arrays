@@ -1,0 +1,86 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+//Find minimum difference between any two elements
+//Given an unsorted array, find the minimum difference between any pair in given array.
+
+//Examples :
+
+//Input  : {1, 5, 3, 19, 18, 25};
+//Output : 1
+//Minimum difference is between 18 and 19
+
+//Input  : {30, 5, 20, 9};
+//Output : 4
+//Minimum difference is between 5 and 9
+
+//Input  : {1, 19, -4, 31, 38, 25, 100};
+//Output : 5
+//Minimum difference is between 1 and -4
+//http://www.geeksforgeeks.org/find-minimum-difference-pair/
+
+namespace MinDifferenceOfElements
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            int[] arr = { 1, 5, 3, 19, 18, 25 };
+            int result = FindDifference(arr);
+
+            Console.WriteLine("The minimum difference in the array is {0}",result);
+            Console.ReadLine();
+        }
+
+        static bool CheckData(int[] arr)
+        {
+            if (arr.Length ==0)
+            {
+                return false;
+            }
+            
+            //Since this is an integer array, we don't have to worry about symbols, letters, or other characters
+
+            return true;
+        }
+
+        static int FindDifference(int[] arr)
+        {
+            int difference = 0;
+
+            if (CheckData(arr))
+            {
+
+                //Sort the array
+                Array.Sort(arr);
+
+                if (arr.Length == 1)
+                {
+                    Console.WriteLine("The minimum difference is {0} because only 1 element exists in the array", difference);
+                }
+
+                //Do the math. Subtract each element with the previous.
+                //If result is less than the previous calculation, store the result
+                if (arr.Length > 1)
+                {
+                    difference = arr[1] - arr[0];
+                }
+
+                for (int i = 2; i <= arr.Length - 1; i++)
+                {
+                    if (arr[i] - arr[i - 1] < difference)
+                    {
+                        difference = arr[i] - arr[i - 1];
+                    }
+                    Console.WriteLine("Current difference is {0} at location {1}. Arr value is {2}", difference, i, arr[i]);
+                }
+            }
+
+            return difference;
+
+        }
+    }
+}
