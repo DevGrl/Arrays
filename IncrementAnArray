@@ -1,0 +1,81 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace IncrementAnArray
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            int[] original={0,0};
+            int[] end = {10,5};
+
+            bool check = ErrorCheck(original, end);
+            int operationCount = 0;
+            Console.WriteLine(original.SequenceEqual(end));
+            if (check)
+            {
+                while (original.SequenceEqual(end)==false)
+                {
+                    original = ModifyElements(original, end, operationCount, out operationCount);
+                }
+                
+            }
+            Console.WriteLine("Operations required to modify original array: {0}",operationCount);
+            Console.ReadLine();
+        }
+
+        static int[] ModifyElements(int[] original, int[] end, int count, out int operationCount)
+        {
+            for (int i = 0; i <= end.Length - 1; i++)
+            {
+                //Double element size
+                if (original[i] > 0 && original[i] * 2 < end[i])
+                {
+                    original[i] = original[i] * 2;
+                    Console.WriteLine("Doubling original[{0}] size to {1}", i, original[i]);
+                }
+                else if (original[i] < end[i])
+                {
+                    original[i]++;
+                    Console.WriteLine("Incrementing original[{0}] by one to {1}", i, original[i]);
+                }
+                else
+                {
+                    Console.WriteLine("No more operations to perform on original element at location: {0}", i);
+                }
+            }
+            operationCount = count + 1;
+
+            return original;
+        }
+
+        static bool ErrorCheck(int[] original, int[] end)
+        {
+
+            //Check for empty array
+            if (original.Length == 0)
+            {
+                Console.WriteLine("Unable to continue. The starting array does not have elements.");
+                return false;
+            }
+
+            if (end.Length == 0)
+            {
+                Console.WriteLine("Unable to continue. The ending array does not have elements.");
+                return false;
+            }
+
+            if (original.Length != end.Length)
+            {
+                Console.WriteLine("Unable to perform operation. The length of the arrays to compare do not match");
+                return false;
+            }
+
+            return true;
+        }
+    }
+}
