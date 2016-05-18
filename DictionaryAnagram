@@ -1,0 +1,72 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace DictionaryAnagram
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            string word = "poto";
+            string anagram = "toop";
+
+           bool result = CheckAnagram(word, anagram);
+            Console.WriteLine(result);
+            Console.ReadLine();
+        }
+
+        static bool CheckAnagram(string word, string anagram)
+        {
+            if (word.Length == 0 || anagram.Length == 0)
+            {
+                return false;
+            }
+
+            if (word.Length != anagram.Length)
+            {
+                return false;
+            }
+
+            Dictionary<string, int> checkWord = new Dictionary<string, int>();
+
+            for (int i = 0; i <= word.Length-1; i++)
+            {
+                string key = word[i].ToString();
+                int value = 0;
+                if (!(checkWord.TryGetValue(key, out value)))
+                {
+                    checkWord.Add(word[i].ToString(), +1);
+                }
+                else //Key already exits, increment value only
+                {
+                    checkWord[key] += 1;
+                }                
+            }
+
+            for (int i = 0; i <= anagram.Length-1; i++)
+            {
+                int value;
+                bool check = checkWord.TryGetValue(anagram[i].ToString(), out value);
+                
+                if (!(checkWord.ContainsKey(anagram[i].ToString())))
+                {
+                    return false;
+                }
+                else if (check && value != 0)
+                {
+                    checkWord[anagram[i].ToString()] -=1;
+                }
+                
+            }
+
+            //Make sure all values are zero
+            var myValue = checkWord.SingleOrDefault(x => x.Value != 0).Key;
+            if (myValue != null) return false;
+            
+            return true;
+        }
+    }
+}
