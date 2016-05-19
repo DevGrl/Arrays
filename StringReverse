@@ -1,0 +1,50 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace StringReverse
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            string phrase = "I love my cat";
+            //"tac ym evol I"
+            string revPhrase1 = new String(Iteration(phrase));
+            Console.WriteLine("Result with iteration: {0}", revPhrase1);
+
+            string revPhrase2 = new String(Recurse(phrase, phrase.ToCharArray(), 0, phrase.Length-1));
+            Console.WriteLine("Result with recursion: {0}", revPhrase2);
+            Console.ReadLine();
+        }
+
+        static char[] Iteration(string phrase)
+        {
+            int j = phrase.Length-1;
+            char temp;
+            char[] revPhrase = phrase.ToCharArray();
+            
+
+            for (int i = 0; i < j; i++, j-- )
+            {
+                temp = phrase[j];
+                revPhrase[j] = phrase[i];
+                revPhrase[i] = temp;
+
+            }
+            return revPhrase;
+        }
+
+        static char[] Recurse(string phrase, char[] revPhrase, int i, int j)
+        {
+            if (i == j) return revPhrase;
+            revPhrase[i] = phrase[j];
+            revPhrase[j] = phrase[i];
+            i++;
+            j--;
+            return revPhrase = Recurse(phrase, revPhrase, i, j);
+        }
+    }
+}
