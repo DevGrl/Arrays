@@ -10,41 +10,66 @@ namespace StringReverse
     {
         static void Main(string[] args)
         {
-            string phrase = "I love my cat";
+            string sentence = "I love my cat";
             //"tac ym evol I"
-            string revPhrase1 = new String(Iteration(phrase));
-            Console.WriteLine("Result with iteration: {0}", revPhrase1);
+            string newSentence1 = new String(Iteration(sentence));
+            Console.WriteLine("Result with iteration: {0}", newSentence1);
 
-            string revPhrase2 = new String(Recurse(phrase, phrase.ToCharArray(), 0, phrase.Length-1));
-            Console.WriteLine("Result with recursion: {0}", revPhrase2);
-            Console.ReadLine();
+            string newSentence2 = new String(Recurse(sentence, sentence.ToCharArray(), 0, sentence.Length-1));
+            Console.WriteLine("Result with recursion: {0}", newSentence2);
+            //Change the string to read "cat my love I"
+            int start = 0;
+            int end = 0;
+            for (int i = 0; i <= newSentence2.Length - 1; i++ )
+            {
+                if (newSentence2[i] == ' ' || i == newSentence2.Length -1)
+                {
+                    end = i-1;
+                    if (start < end)
+                    {                     
+                        newSentence2 = new String( Recurse(newSentence2, newSentence2.ToCharArray(), start, end));   
+                    }
+                    start = i + 1;                   
+                }
+            }
+                Console.WriteLine("Result with recursion: {0}", newSentence2);
+                Console.ReadLine();
         }
 
-        static char[] Iteration(string phrase)
+        static char[] Iteration(string sentence)
         {
-            int j = phrase.Length-1;
+            int j = sentence.Length-1;
             char temp;
-            char[] revPhrase = phrase.ToCharArray();
+            char[] newSentence = sentence.ToCharArray();
             
 
             for (int i = 0; i < j; i++, j-- )
             {
-                temp = phrase[j];
-                revPhrase[j] = phrase[i];
-                revPhrase[i] = temp;
+                temp = sentence[j];
+                newSentence[j] = sentence[i];
+                newSentence[i] = temp;
 
             }
-            return revPhrase;
+            return newSentence;
         }
 
-        static char[] Recurse(string phrase, char[] revPhrase, int i, int j)
+        static char[] Recurse(string sentence, char[] newSentence, int i, int j)
         {
-            if (i == j) return revPhrase;
-            revPhrase[i] = phrase[j];
-            revPhrase[j] = phrase[i];
-            i++;
-            j--;
-            return revPhrase = Recurse(phrase, revPhrase, i, j);
+            if (i == j) return newSentence;
+            newSentence[i] = sentence[j];
+            newSentence[j] = sentence[i];
+            
+            if(i+1 == j)
+            {
+                return newSentence = Recurse(sentence, newSentence, i+1, j);
+            }
+            else
+            {
+                i++;
+                j--;
+            }
+            return newSentence = Recurse(sentence, newSentence, i, j);
+            
         }
     }
 }
