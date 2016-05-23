@@ -1,0 +1,123 @@
+//Algorithms
+//Question 9, Stacks
+//Reverse a stack and put the reversed value back in the same stack. You can use only one other stack and a temp variable
+
+//Move 1st element of original stack to 2nd stack
+//Move remaining elements to 3rd stack
+//Move 1st element to original stack
+//Remaining elements except last to original
+//last to 2nd stack
+//remaining to 3rd stack
+//last to original
+//repeat
+
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace StacksTowerOfHanoi
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Stack originalStack = new Stack();
+            originalStack.Push(4);
+            originalStack.Push(3);
+            originalStack.Push(2);
+            originalStack.Push(1);  
+            //1,2,3,4
+            
+            Console.WriteLine("This is the original stack");
+            PrintStack(originalStack);
+
+            ReverseStack(originalStack);
+        }
+
+        static void PrintStack(Stack stack)
+        {
+            int i = 0;
+            foreach (var item in stack)
+            {
+                Console.WriteLine("Item {0} is {1}", i, item);
+                i++;
+            }
+            Console.WriteLine("*************");
+            Console.ReadLine();
+        }
+
+        static Stack ReverseStack(Stack originalStack)
+        {
+            Stack tempStack = new Stack();
+            string temp = "";
+            
+            int originalStackCount = originalStack.Count;
+
+            if (originalStack.Count == 0)
+            {
+                Console.WriteLine("The stack is empty.");
+            }
+
+            //First round, moves last element to the first position on originalStack
+            temp = Convert.ToString(originalStack.Pop());
+            Console.WriteLine("first element" + temp);
+
+            while (originalStack.Count > 0)
+            {
+                tempStack.Push(originalStack.Pop());
+            }            
+                        
+            originalStack.Push(temp);
+            Console.WriteLine("First pass, 1 should be at location 0");
+            PrintStack(originalStack);
+            int elementCount = 0;
+            //end First round
+
+            elementCount++;
+            originalStack = PopTemp(originalStack, tempStack, elementCount, out tempStack, out temp);            
+            originalStack = PopOriginal(originalStack, tempStack, elementCount, out tempStack);            
+            originalStack.Push(temp);
+
+            originalStack = PopTemp(originalStack, tempStack, elementCount, out tempStack, out temp);
+            elementCount++;
+            originalStack = PopOriginal(originalStack, tempStack, elementCount, out tempStack);
+            originalStack.Push(temp);
+
+            originalStack = PopTemp(originalStack, tempStack, elementCount, out tempStack, out temp);
+            elementCount++;
+            originalStack = PopOriginal(originalStack, tempStack, elementCount, out tempStack);
+            originalStack.Push(temp);
+            PrintStack(originalStack);
+            return originalStack;
+        }
+
+        static Stack PopTemp(Stack originalStack, Stack tStack, int elementCount, out Stack tempStack, out string temp)
+        {
+            int count = tStack.Count;
+            while (elementCount < count)
+            {
+                originalStack.Push(tStack.Pop());
+                elementCount++;
+            }
+
+            temp = Convert.ToString(tStack.Pop());
+            tempStack = tStack;
+
+            return originalStack;
+        }
+
+        static Stack PopOriginal(Stack originalStack, Stack tStack, int elementCount, out Stack tempStack)
+        {
+            while (elementCount < originalStack.Count)
+            {
+                tStack.Push(originalStack.Pop());
+            }
+
+            tempStack = tStack;
+            return originalStack;
+        }           
+    }
+}
