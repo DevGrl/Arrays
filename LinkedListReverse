@@ -27,40 +27,51 @@ namespace LinkedListRecursion
                 Console.WriteLine(item);
             }
 
-            numbers = Iteration(numbers);
+            Stack<LinkedListNode<int>> temp = new Stack<LinkedListNode<int>>();
+            int count = numbers.Count;
+            numbers = Recurse(numbers,temp, 0, count);
 
-            Console.WriteLine("This is the linked list after being reversed iteratively with a stack");
+            Console.WriteLine("The recursed linked list");
             foreach (var item in numbers)
             {
                 Console.WriteLine(item);
             }
-            
+
             Console.ReadLine();
         }
 
-        private static LinkedList<int> Iteration(LinkedList<int> numbers)
+        private static LinkedList<int> Recurse(LinkedList<int> numbers, Stack<LinkedListNode<int>> temp, int i, int count)
         {
-            //Iteration using a stack
-
-            Stack<LinkedListNode<int>> temp = new Stack<LinkedListNode<int>>();
-            int count = numbers.Count;
-            
-            //Put all nodes into the stack, empty the linked list
-            for (int i = 0; i <= count-1; i++ )
+            //do until i <= original count of numbers
+            //for each item in numbers, remove and add to temp
+            //then pop items off temp and add them to numbers with addfirst
+            //esc: if i == count, return numbers
+            if (count == i)
             {
-                LinkedListNode<int> node = numbers.Last;
-                numbers.Remove(numbers.Last);
-                temp.Push(node);                
-            }
-            
-            //Move all items out of the stack and back into the linked list
-            count = temp.Count;
-            for (int i = 0; i <= count - 1; i++ )
-            {
-                LinkedListNode<int> node = temp.Pop();
-                numbers.AddFirst(node);
-            }
+                numbers = PopTempStack(numbers, temp, 0, count);
                 return numbers;
+            }
+            LinkedListNode<int> node = numbers.Last;
+            numbers.Remove(node);
+            temp.Push(node);
+            i++;
+            return numbers = Recurse(numbers, temp, i, count);
+
+        }
+
+        private static LinkedList<int> PopTempStack(LinkedList<int> numbers, Stack<LinkedListNode<int>> temp, int i, int count)
+        {
+            //Pop stack, add to numbers list
+            //esc: if i == count, return numbers
+            if (count == i)
+            {
+                return numbers;
+            }
+
+            LinkedListNode<int> node = temp.Pop();
+            numbers.AddFirst(node);
+            i++;
+            return numbers = PopTempStack(numbers, temp, i, count);
         }
     }
 
