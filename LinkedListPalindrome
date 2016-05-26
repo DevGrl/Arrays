@@ -1,0 +1,97 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace LinkedListPalindrome
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            //Problem
+            //Determine whether a linked list is a palindrome (without using the count property)
+
+            //Check
+            //Make sure the list is not empty
+
+            LinkedList<string> p = new LinkedList<string>();
+            p.AddLast("a");
+            p.AddLast("a");
+            p.AddLast("b");
+            p.AddLast("c");
+            p.AddLast("b");
+            p.AddLast("a");
+            p.AddLast("z");
+
+            bool isPalindrome = StackSolution(p);
+
+            if (isPalindrome)
+            {
+                Console.Write("Yes, '");
+                foreach (var item in p)
+                {
+                    Console.Write(item);
+                }
+                Console.Write("' is a palindrome");
+            }
+            else
+            {
+                Console.Write("No, '");
+                foreach (var item in p)
+                {
+                    Console.Write(item);
+                }
+                Console.Write("' is not a palindrome.");
+            }
+            Console.ReadLine();
+
+        }
+
+        //Solution 1: Add all to stack and then pop off stack and compare
+        private static bool StackSolution(LinkedList<string> p)
+        {
+            if(p.Count == 0)
+            { 
+                return false; 
+            }
+            
+            Stack<LinkedListNode<string>> tempStack = new Stack<LinkedListNode<string>>();
+            LinkedListNode<string> node = p.First;
+            bool isPalindrome = false;
+            //Add to the stack
+            while (node != null)
+            {                
+                tempStack.Push(node);
+                node = node.Next;
+            } 
+
+            //Pop off stack and compare to linked list
+            node = p.First;
+            string tempStackValue = "";
+            if (tempStack.Count != 0) 
+            { 
+                tempStackValue = tempStack.Pop().Value; 
+            }
+
+            while (tempStack.Count > 0)
+            {
+                
+                if( tempStackValue == node.Value)
+                {
+                    node = node.Next;
+                    tempStackValue = tempStack.Pop().Value;
+                }
+                else
+                {
+                    return false;
+                }
+
+                isPalindrome = true;
+            }
+            
+            return isPalindrome;
+        }        
+    }
+}
