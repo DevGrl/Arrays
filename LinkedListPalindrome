@@ -26,27 +26,26 @@ namespace LinkedListPalindrome
             p.AddLast("z");
 
             bool isPalindrome = StackSolution(p);
+            string result = PrintLinkedList(p);
 
-            if (isPalindrome)
-            {
-                Console.Write("Yes, '");
-                foreach (var item in p)
-                {
-                    Console.Write(item);
-                }
-                Console.Write("' is a palindrome");
-            }
-            else
-            {
-                Console.Write("No, '");
-                foreach (var item in p)
-                {
-                    Console.Write(item);
-                }
-                Console.Write("' is not a palindrome.");
-            }
+            Console.WriteLine(isPalindrome ? "Yes, " + result + " is a palindrome" : "No, " + result + " is not a palindrome";
+
             Console.ReadLine();
 
+        }
+
+        private static string PrintLinkedList(LinkedList<string> list)
+        {
+            LinkedListNode<string> node = list.First;
+            string result = "";
+
+            for (int i = 0; i <= list.Count-1; i++ )
+            {
+                result += node.Value;
+                node = node.Next;
+            }
+
+            return result;
         }
 
         //Solution 1: Add all to stack and then pop off stack and compare
