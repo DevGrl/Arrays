@@ -1,0 +1,50 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace BinaryOperationsFindDuplicate
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            //Given an array that contains numbers from 1 to n-1 and exactly 1 duplicate, find that duplicate using bit operations
+
+            //Sort the array
+            //Loop through array with 2 pointers
+            //First pointer at an element. Convert to binary
+            //Second pointer at next element. Convert to binary
+            //Use XOR to compare
+            //If all 0's then duplicate found
+            //Else continue looping
+
+            int[] numbers = { 1, 3, 4, 3, 0 };
+            Array.Sort(numbers); //0, 1, 3, 3, 4
+            if (numbers.Length > 0)
+            {
+                int duplicate = FindDuplicate(numbers, 0);
+                Console.WriteLine("Duplicate is {0}", duplicate);
+            }
+            Console.Read();
+
+        }
+
+        static private int FindDuplicate(int[] numbers, int counter)
+        {
+            string pointer1 = Convert.ToString(numbers[counter],2);
+            string pointer2 = Convert.ToString(numbers[counter+1],2);
+
+            int temp = Convert.ToInt32(pointer1) ^ Convert.ToInt32(pointer2);
+            if (temp == 0)
+            {
+                return numbers[counter];
+            }
+
+            counter = counter + 1;
+            return FindDuplicate(numbers, counter);
+
+        }
+    }
+}
