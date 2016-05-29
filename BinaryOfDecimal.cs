@@ -19,21 +19,16 @@ namespace DecimalToBinary
             //Divide n by 2 and use the result as the new number n
             //Continue until n is 0
 
-            //original value
             int n = 13;
-
-            LinkedList<int> binary = new LinkedList<int>();
+            string binary = "";
 
             do
             {
-                binary.AddFirst( n % 2);
+                binary = (n % 2) + binary;   
                 n = n / 2;
             } while (n != 0);
 
-            foreach (var item in binary)
-            {
-                Console.Write(item);
-            }
+            Console.WriteLine(binary);
 
             Console.ReadLine();
 
