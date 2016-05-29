@@ -4,35 +4,46 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BinaryFindingBitsTurnedOn
+namespace BinaryOperationsFindDuplicate
 {
     class Program
     {
         static void Main(string[] args)
         {
-            //Problem
-            //Find the number of bits that are on in a decimal number
+            //Given an array that contains numbers from 1 to n-1 and exactly 1 duplicate, find that duplicate using bit operations
 
-            //Convert the decimal number to binary
-            //store value in a string
-            //Loop through string, incrementing a counter for each bit that equals 1
-            //return counter
+            //Sort the array
+            //Loop through array with 2 pointers
+            //First pointer at an element. Convert to binary
+            //Second pointer at next element. Convert to binary
+            //Use XOR to compare
+            //If all 0's then duplicate found
+            //Else continue looping
 
-            int number = 35;
-            string binary = Convert.ToString(number, 2);
-            Console.WriteLine("The binary equivalent of {0} is {1}" ,number, binary);
-            int counter = 0;
-
-            for(int i = 0; i <= binary.Length-1; i++)
+            int[] numbers = { 1, 9, 4, 3, 0 , 5, 9};
+            Array.Sort(numbers); //0, 1, 3, 4, 5, 9, 9
+            if (numbers.Length > 0)
             {
-                if(binary[i] == '1')
-                {
-                    counter++;                
-                }
+                int duplicate = FindDuplicate(numbers, 0);
+                Console.WriteLine("Duplicate is {0}", duplicate);
+            }
+            Console.Read();
+
+        }
+
+        static private int FindDuplicate(int[] numbers, int counter)
+        {
+            int pointer1 = numbers[counter];
+            int pointer2 = numbers[counter+1];
+
+            if ((pointer1 ^ pointer2) == 0)
+            {
+                return numbers[counter];
             }
 
-            Console.WriteLine("The number of bits turned on is: {0}", counter);
-            Console.Read();            
+            counter = counter + 1;
+            return FindDuplicate(numbers, counter);
+
         }
     }
 }
