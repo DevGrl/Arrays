@@ -1,0 +1,42 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace BinaryAddition
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            //Add two numbers a and b using binary operations
+
+            //Loop through until carryover = 0 and return result
+            //Get the XOR of a and b. result =  a ^ b
+            //Take the AND of a and b, left shift by 1. CarryOver = a & b << 1
+            int a = 3;
+            int b = 7;
+
+            int result = Add(a, b);
+            Console.WriteLine("The sum of {0} and {1} is {2}", a, b, result);
+            Console.WriteLine("The binary sum of {0} and {1} is {2}", Convert.ToString(a,2), Convert.ToString(b,2) , Convert.ToString(result,2));
+
+            Console.Read();
+
+        }
+
+        static private int Add(int a, int b)
+        {
+            int result = a ^ b;
+            int carryOver = (a & b) << 1;
+
+            while (carryOver != 0)
+            {
+                return Add(result, carryOver);                
+            }
+            
+            return result;
+        }
+    }
+}
