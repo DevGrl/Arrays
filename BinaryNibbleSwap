@@ -1,0 +1,48 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace BinarySwapNibbles
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            //Swap two nibbles in a byte
+
+            //Have a pointer at the end of each nibble
+            //Swap values of each pointer
+            //Decrement by 1
+            int number = 1;
+            char[] binary = Convert.ToString(number, 2).PadLeft(8, '0').ToCharArray();
+            Console.Write("Original value: ");
+            Console.WriteLine(binary);
+            NibbleSwap(binary, 0, 4);
+            Console.Write("New value: ");
+            Console.WriteLine(binary);
+            Console.Read();
+
+        }
+
+        private static char[] NibbleSwap(char[] binary, int p1, int p2)
+        {
+            char[] newBinary = binary;
+
+            char temp = newBinary[p1];
+            newBinary[p1] = newBinary[p2];
+            newBinary[p2] = temp;
+
+            if(p2 == binary.Length-1)
+            { 
+                return newBinary;
+            }
+
+            p1 = p1 + 1;
+            p2 = p2 + 1;
+
+            return NibbleSwap(newBinary, p1, p2);
+        }
+    }
+}
