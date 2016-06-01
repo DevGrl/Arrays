@@ -1,0 +1,40 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Palindrome
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            //Find out if the string is a palindrome
+            string str = "madam";
+            bool result = Recurse(str, 0, str.Length - 1);
+            Console.WriteLine(result);
+            Console.Read();
+        }
+
+        private static bool Recurse(string str, int start, int end)
+        {
+            if (start == end) return true;
+
+            if(str[start] == str[end])
+            {
+                start++;
+                end--;
+                Recurse(str, start, end);
+            }
+            else if(!(str[start]==str[end]))
+            {
+                return false;
+            }
+           
+            return true;
+        }
+
+
+    }
+}
