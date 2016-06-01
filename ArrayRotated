@@ -1,0 +1,31 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace RotatedArray
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            //Find beginning of rotated array
+            int a = 0;
+            int[] numbers = { 4, 5, 5, 6, 3, 2, -1 };
+
+            int mid = (numbers.Length-1)/2;
+            while (!(numbers[a] > numbers[a+1]))
+            {
+                if(numbers[a] < numbers[mid])
+                {//Left side is smaller, look at the right side
+                    a = mid;
+                    mid = ((mid - (numbers.Length - 1)) / 2) + mid;
+                }
+            }
+
+            Console.WriteLine(numbers[a+1]);
+            Console.Read();
+        }
+    }
+}
