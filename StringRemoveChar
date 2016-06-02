@@ -1,0 +1,45 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace TestApps
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            //Remove a character from a string
+
+            //Convert to character array
+            //Iterate through until char is found
+            //Use a counter to replace
+
+            string str = "I have the1 cutest cat!";
+            char x = '1';
+            RemoveChar(str.ToCharArray(), x);
+        }
+
+        private static void RemoveChar(char[] str, char x)
+        {
+            int counter = 0;
+
+            for(int i =0; i <= str.Length-1; i++)
+            {
+                if(!(str[i] == x))
+                {
+                    str[counter] = str[i];
+                    counter++;
+                }
+            }
+
+            int newLength = str.Length-(str.Length-counter);
+            Array.Resize(ref str, newLength);
+
+            Console.WriteLine(str);
+            Console.Read();
+        }
+
+    }
+}
