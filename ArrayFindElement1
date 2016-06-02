@@ -1,0 +1,61 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace FindElement
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            //Search an element in an array where difference between adjacent elements is 1
+            //Example: arr[] = {8, 7, 6, 7, 6, 5, 4, 3, 2, 3, 4, 3}
+
+            //Search for 3 and Output: Found at index 7
+
+            //Compare first element to 3
+            //If they do not match, subtract the two to know how many hops to move
+            //If negative number to a positive, take abs and add them
+            //Move the number of calculated hops and continue until element matches 3
+
+            int[] arr = { 7, 6, 7, 6, 5, 4, 3, 2, 3, 4, 3 };
+            //int[] arr = { -3, -2, -1, 0, 1, 2, 1, 2, 3, 4, 5, 4 };
+            int element = 3;
+            int result = FindElement(arr, element);
+            Console.Write(result == -1 ? "The array was empty":"");
+
+            Console.WriteLine("Found at index {0}",result);
+            Console.Read();
+        }
+
+        private static int FindElement(int[] arr, int element)
+        {
+            if (arr.Length == 0)
+            {
+                return -1;
+            }
+
+            int i = 0;
+
+            while (!(arr[i] == element))
+            {
+
+                if(arr[i] < 0 & element > 0)//arr[i] is negative
+                {
+                    i = Math.Abs(arr[i]) + element + i;
+                }else if(arr[i] > 0 & arr[element] < 0)//element is negative
+                {
+                    i = arr[i] + Math.Abs(element) + i;
+                }else //Both are positive
+                {
+                    i = Math.Abs(arr[i] - element) + i;
+                }
+            }
+            
+            return i;
+        }
+
+    }
+}
